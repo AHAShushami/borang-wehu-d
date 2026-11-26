@@ -60,9 +60,8 @@ const WEHU_D_64_HEADERS = [
   "LIKELY ROUTE (S) OF POISONING 1",
   "LIKELY ROUTE (S) OF POISONING 2",
   "LIKELY ROUTE (S) OF POISONING 3",
-  "OTHER ROUTE OF POISONING",
   "WAS FIRST AID GIVEN AT THE SITE OF POISONING?",
-  "OTHER ROUTE OF POISONING (EXTRA)",
+  "OTHER ROUTE OF POISONING",
   "IS POISONING CONFIRMED BY LABORATORY INVESTIGATION?",
   "OTHER IF POISONING CONFIRMED",
   "OUTCOME OF POISONING",
@@ -540,9 +539,8 @@ function build64ColumnRow(rowNumber = "") {
   const routes = getCheckedInSection("route_poisoning");
   const route1 = routes[0] || "";
   const route2 = routes[1] || "";
-  const route3 = routes[2] || "";
+  const route3 = routes.slice(2).join("; ");
   const otherRoute = document.getElementById("d2-route-others").value.trim();
-  const extraRouteCol57 = routes.slice(3).join("; ");
 
   const firstAid = getCheckedInSection("first_aid").join("; ");
   const labConfirm = getCheckedInSection("lab_confirm").join("; ");
@@ -557,70 +555,69 @@ function build64ColumnRow(rowNumber = "") {
   const siasatan = document.getElementById("reg-siasatan").value.trim();
 
   return [
-    rowNumber,        // 1. NO
-    dateEntry,        // 2. DATE OF ENTRY (dd/mm/yyyy)
-    caseCode,         // 3. CASE CODE
-    notifierName,     // 4. NAME OF NOTIFIER
-    notifierDesig,    // 5. DESIGNATION OF NOTIFIER
-    notifierAddr,     // 6. ADDRESS OF CLINIC/HOSPITAL OF NOTIFIER
-    notifierContact,  // 7. CONTACT NUMBER OF NOTIFIER
-    affectedName,     // 8. NAME OF AFFECTED PERSON
-    dob,              // 9. DATE OF BIRTH (dd/mm/yyyy)
-    ageStr,           // 10. AGE
-    ageGroup,         // 11. AGE GROUP
-    icPassport,       // 12. NEW IC /PASSPORT NO.
-    nationality,      // 13. NATIONALITY
-    othersNat,        // 14. OTHERS NATIONALITY (PLEASE SPECIFY)
-    gender,           // 15. GENDER
-    ethnic,           // 16. ETHNIC GROUP
-    occupation,       // 17. OCCUPATION
-    occClass,         // 18. OCCUPATIONAL CLASS
-    facType,          // 19. TYPE OF FACILITY
-    orgAddr,          // 20. NAME AND ADDRESS OF ORGANIZATION OF AFFECTED PERSON
-    department,       // 21. DEPARTMENT
-    unit,             // 22. UNIT
-    district,         // 23. DISTRICT
-    state,            // 24. STATE
-    diagDate,         // 25. DATE OF DIAGNOSIS (dd/mm/yyyy)
-    monthOfDiag,      // 26. MONTH OF DIAGNOSIS
-    diagnosis,        // 27. DIAGNOSIS/PROVISIONAL DIAGNOSIS
-    workDesc,         // 28. WHAT KIND OF WORK DID THE PATIENT DO...
-    hazardDesc,       // 29. WHAT WAS THE HAZARDS OR AGENT...
-    expDay,           // 30. EXPOSED (day)
-    expMonth,         // 31. EXPOSED (month)
-    expYear,          // 32. EXPOSED (years)
-    sympDay,          // 33. SYMPTOMS (days)
-    sympMonth,        // 34. SYMPTOMS (month)
-    sympYear,         // 35. SYMPTOMS (years)
-    notifDate,        // 36. DATE OF NOTIFICATION (dd/mm/yyyy)
-    monthOfNotif,     // 37. MONTH OF NOTIFICATION
-    occDate,          // 38. DATE OF OCCURRENCE (dd/mm/yyyy)
-    occTime,          // 39. TIME OF OCCURRENCE (hh:mm)
-    statusCase,       // 40. STATUS CASE
-    placeOcc,         // 41. PLACE OF OCCURRENCE
-    placeOthers,      // 42. OTHERS PLACE OF OCCURENCE (PLEASE SPECIFY)
-    circumstances,    // 43. CIRCUMSTANCES OF POISONING
-    tradeName,        // 44. TRADE NAME OF POISONING AGENT(S)
-    activeIngred,     // 45. TRADE NAME OF ACTIVE INGREDIENT
-    typePoisoning,    // 46. TYPE OF POISONING
-    typePesticide,    // 47. TYPE OF PESTICIDE
-    otherPesticide,   // 48. OTHER TYPE OF PESTICIDE (PLEASE SPECIFY)
-    typeChemical,     // 49. TYPE OF CHEMICAL
-    otherChemical,    // 50. OTHER TYPE OF CHEMICAL
-    pharmaSpecify,    // 51. IF PHARMACEUTICAL AGENTS, PLEASE INDICATE
-    route1,           // 52. LIKELY ROUTE (S) OF POISONING 1
-    route2,           // 53. LIKELY ROUTE (S) OF POISONING 2
-    route3,           // 54. LIKELY ROUTE (S) OF POISONING 3
-    otherRoute,       // 55. OTHER ROUTE OF POISONING
-    firstAid,         // 56. WAS FIRST AID GIVEN AT THE SITE OF POISONING?
-    extraRouteCol57,  // 57. OTHER ROUTE OF POISONING (2nd col in template)
-    labConfirm,       // 58. IS POISONING CONFIRMED BY LABORATORY INVESTIGATION?
-    otherLabConfirm,  // 59. OTHER IF POISONING CONFIRMED
-    outcome,          // 60. OUTCOME OF POISONING
-    wardDays,         // 61. ADMITTED WARD/DIED AFTER TREATED (DAYS)
-    othersOutcome,    // 62. OTHERS OUTCOMES
-    kodKkm,           // 63. No Kod KKM
-    siasatan          // 64. SIASATAN
+    rowNumber,        // 1. NO (A)
+    dateEntry,        // 2. DATE OF ENTRY (B)
+    caseCode,         // 3. CASE CODE (C)
+    notifierName,     // 4. NAME OF NOTIFIER (D)
+    notifierDesig,    // 5. DESIGNATION OF NOTIFIER (E)
+    notifierAddr,     // 6. ADDRESS OF CLINIC/HOSPITAL OF NOTIFIER (F)
+    notifierContact,  // 7. CONTACT NUMBER OF NOTIFIER (G)
+    affectedName,     // 8. NAME OF AFFECTED PERSON (H)
+    dob,              // 9. DATE OF BIRTH (I)
+    ageStr,           // 10. AGE (J)
+    ageGroup,         // 11. AGE GROUP (K)
+    icPassport,       // 12. NEW IC /PASSPORT NO. (L)
+    nationality,      // 13. NATIONALITY (M)
+    othersNat,        // 14. OTHERS NATIONALITY (N)
+    gender,           // 15. GENDER (O)
+    ethnic,           // 16. ETHNIC GROUP (P)
+    occupation,       // 17. OCCUPATION (Q)
+    occClass,         // 18. OCCUPATIONAL CLASS (R)
+    facType,          // 19. TYPE OF FACILITY (S)
+    orgAddr,          // 20. NAME AND ADDRESS OF ORGANIZATION (T)
+    department,       // 21. DEPARTMENT (U)
+    unit,             // 22. UNIT (V)
+    district,         // 23. DISTRICT (W)
+    state,            // 24. STATE (X)
+    diagDate,         // 25. DATE OF DIAGNOSIS (Y)
+    monthOfDiag,      // 26. MONTH OF DIAGNOSIS (Z)
+    diagnosis,        // 27. DIAGNOSIS/PROVISIONAL DIAGNOSIS (AA)
+    workDesc,         // 28. WHAT KIND OF WORK... (AB)
+    hazardDesc,       // 29. WHAT WAS THE HAZARDS... (AC)
+    expDay,           // 30. EXPOSED (day) (AD)
+    expMonth,         // 31. EXPOSED (month) (AE)
+    expYear,          // 32. EXPOSED (years) (AF)
+    sympDay,          // 33. SYMPTOMS (days) (AG)
+    sympMonth,        // 34. SYMPTOMS (month) (AH)
+    sympYear,         // 35. SYMPTOMS (years) (AI)
+    notifDate,        // 36. DATE OF NOTIFICATION (AJ)
+    monthOfNotif,     // 37. MONTH OF NOTIFICATION (AK)
+    occDate,          // 38. DATE OF OCCURRENCE (AL)
+    occTime,          // 39. TIME OF OCCURRENCE (AM)
+    statusCase,       // 40. STATUS CASE (AN)
+    placeOcc,         // 41. PLACE OF OCCURRENCE (AO)
+    placeOthers,      // 42. OTHERS PLACE OF OCCURENCE (AP)
+    circumstances,    // 43. CIRCUMSTANCES OF POISONING (AQ)
+    tradeName,        // 44. TRADE NAME OF POISONING AGENT(S) (AR)
+    activeIngred,     // 45. TRADE NAME OF ACTIVE INGREDIENT (AS)
+    typePoisoning,    // 46. TYPE OF POISONING (AT)
+    typePesticide,    // 47. TYPE OF PESTICIDE (AU)
+    otherPesticide,   // 48. OTHER TYPE OF PESTICIDE (AV)
+    typeChemical,     // 49. TYPE OF CHEMICAL (AW)
+    otherChemical,    // 50. OTHER TYPE OF CHEMICAL (AX)
+    pharmaSpecify,    // 51. IF PHARMACEUTICAL AGENTS, PLEASE INDICATE (AY)
+    route1,           // 52. LIKELY ROUTE 1 (AZ)
+    route2,           // 53. LIKELY ROUTE 2 (BA)
+    route3,           // 54. LIKELY ROUTE 3 (BB)
+    firstAid,         // 55. WAS FIRST AID GIVEN AT THE SITE OF POISONING? (BC)
+    otherRoute,       // 56. OTHER ROUTE OF POISONING (BD)
+    labConfirm,       // 57. IS POISONING CONFIRMED BY LAB INVESTIGATION? (BE)
+    otherLabConfirm,  // 58. OTHER IF POISONING CONFIRMED (BF)
+    outcome,          // 59. OUTCOME OF POISONING (BG)
+    wardDays,         // 60. ADMITTED WARD/DIED AFTER TREATED (DAYS) (BH)
+    othersOutcome,    // 61. OTHERS OUTCOMES (BI)
+    kodKkm,           // 62. No Kod KKM (BJ)
+    siasatan          // 63. SIASATAN (BK)
   ];
 }
 
@@ -694,7 +691,7 @@ function populateFormFrom64Row(rawRow) {
   clearAllFormFields();
 
   const row = [];
-  for (let i = 0; i < 64; i++) {
+  for (let i = 0; i < 63; i++) {
     row.push(String(rawRow[i] ?? "").replace(/^'/, "").trim());
   }
 
@@ -769,25 +766,25 @@ function populateFormFrom64Row(rawRow) {
   document.getElementById("d2-chemical-others").value = row[49];
   document.getElementById("d2-pharma-specify").value = row[50];
 
-  const combinedRoutes = [row[51], row[52], row[53], row[56]].filter(Boolean).join("; ");
+  const combinedRoutes = [row[51], row[52], row[53]].filter(Boolean).join("; ");
   restoreChecks("route_poisoning", combinedRoutes);
-  document.getElementById("d2-route-others").value = row[54];
+  restoreChecks("first_aid", row[54]);
+  document.getElementById("d2-route-others").value = row[55];
 
-  restoreChecks("first_aid", row[55]);
-  restoreChecks("lab_confirm", row[57]);
-  document.getElementById("d2-lab-others").value = row[58];
+  restoreChecks("lab_confirm", row[56]);
+  document.getElementById("d2-lab-others").value = row[57];
 
-  restoreChecks("outcome", row[59]);
-  if (row[60]) {
+  restoreChecks("outcome", row[58]);
+  if (row[59]) {
     if (document.querySelector('input[data-item-id="outcome_died"]')?.checked) {
-      document.getElementById("d2-died-days").value = row[60];
+      document.getElementById("d2-died-days").value = row[59];
     } else {
-      document.getElementById("d2-admitted-days").value = row[60];
+      document.getElementById("d2-admitted-days").value = row[59];
     }
   }
-  document.getElementById("reg-others-outcome").value = row[61];
-  document.getElementById("reg-kod-kkm").value = row[62];
-  setSelectOrDynamic("reg-siasatan", row[63]);
+  document.getElementById("reg-others-outcome").value = row[60];
+  document.getElementById("reg-kod-kkm").value = row[61];
+  setSelectOrDynamic("reg-siasatan", row[62]);
 
   const dispNo = row[0] ? `#${row[0]} ` : "";
   showStatus(
@@ -808,7 +805,7 @@ function buildRekodLinkForRow(row) {
   if (ic) params.set("ic", ic);
   if (dateEntry) params.set("date", dateEntry);
   if (no && no !== "(Auto)") params.set("no", no);
-  const encodedRow = encodeURIComponent(row.slice(0, 64).map(v => String(v ?? "").replace(/^'/, "")).join("|~|"));
+  const encodedRow = encodeURIComponent(row.slice(0, 63).map(v => String(v ?? "").replace(/^'/, "")).join("|~|"));
   return `${base}?${params.toString()}#d=${encodedRow}`;
 }
 
@@ -843,7 +840,7 @@ function openPreviewModal() {
     const colLetter = colIndexToLetter(idx);
     const val = allValues[idx] || "";
     const bg = idx % 2 === 0 ? "#ffffff" : "#f8fafc";
-    const cellHtml = idx === 64 && val
+    const cellHtml = idx === 63 && val
       ? `<a href="${val}" style="color:#2563eb;text-decoration:underline;word-break:break-all;">Buka Borang (Pautan Rekod_Link)</a>`
       : (val || "—");
     html += `<tr style="background:${bg};border-bottom:1px solid #e2e8f0;">
@@ -955,7 +952,7 @@ function fetchRowViaGvizJsonp(targetIc, targetDate, targetNo) {
 
         const rows = resp.table.rows.map(r => {
           const arr = [];
-          for (let i = 0; i < 64; i++) {
+          for (let i = 0; i < 63; i++) {
             const cell = r.c && r.c[i];
             const val = cell ? (cell.f != null ? String(cell.f) : (cell.v != null ? String(cell.v) : "")) : "";
             arr.push(val.replace(/^'/, "").trim());
