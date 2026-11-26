@@ -1,0 +1,812 @@
+:root {
+  --paper-bg: #ffffff;
+  --page-shadow: 0 6px 26px rgba(0, 0, 0, 0.18);
+  --ink: #111111;
+  --border-dark: #222222;
+  --header-gray: #c4c4c4;
+  --box-fill: #ebebeb;
+  --focus-tint: #dbeafe;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #cfd4dc;
+  color: var(--ink);
+  font-family: "Arial", "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 12px;
+  line-height: 1.32;
+  padding-top: 92px;
+  padding-bottom: 50px;
+}
+
+/* Sticky Top Control Bar (Hidden on print) */
+.control-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: #1e293b;
+  color: #ffffff;
+  padding: 8px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.control-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-badge {
+  background: #334155;
+  border: 1px solid #475569;
+  padding: 3px 9px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.control-title {
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.page-nav {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  background: #0f172a;
+  padding: 3px;
+  border-radius: 6px;
+}
+
+.page-nav-btn {
+  background: transparent;
+  color: #cbd5e1;
+  border: none;
+  padding: 5px 11px;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.page-nav-btn:hover {
+  color: #ffffff;
+  background: #334155;
+}
+
+.page-nav-btn.active {
+  background: #2563eb;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.control-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  border: none;
+  border-radius: 5px;
+  padding: 6px 11px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn:hover {
+  opacity: 0.92;
+}
+
+.btn-secondary {
+  background: #334155;
+  color: #f8fafc;
+  border: 1px solid #475569;
+}
+
+.btn-outline {
+  background: transparent;
+  color: #93c5fd;
+  border: 1px solid #3b82f6;
+}
+
+.btn-print {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.btn-primary {
+  background: #059669;
+  color: #ffffff;
+}
+
+/* Status Banner */
+.status-banner {
+  width: 210mm;
+  margin: 0 auto 14px auto;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.status-banner.info {
+  display: flex;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1e40af;
+}
+
+.status-banner.success {
+  display: flex;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  color: #065f46;
+}
+
+.status-banner.error {
+  display: flex;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+}
+
+/* Pages Container */
+.pages-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 26px;
+  padding: 0 12px;
+}
+
+/* Exact A4 Paper Sheet */
+.form-page {
+  width: 210mm;
+  height: 297mm;
+  background: var(--paper-bg);
+  box-shadow: var(--page-shadow);
+  padding: 9mm 11mm 9mm 11mm;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #b8bec7;
+  overflow: hidden;
+}
+
+.form-page.hidden-page {
+  display: none;
+}
+
+/* ==================== PAGE 1: WEHU - D1 (JKKP 7) ==================== */
+.d1-top-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  position: relative;
+}
+
+.d1-banner-wrap {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding-top: 8px;
+  padding-left: 55px;
+}
+
+.d1-dark-banner {
+  background: #333333;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 13.5px;
+  letter-spacing: 0.35px;
+  padding: 3px 16px;
+  text-transform: uppercase;
+}
+
+.wehu-code-stamp {
+  font-family: "Times New Roman", Times, Georgia, serif;
+  font-size: 17.5px;
+  font-weight: 700;
+  line-height: 1.08;
+  text-align: center;
+  color: #111111;
+  min-width: 96px;
+}
+
+/* Upper 2-Col Grid (Send To + Part A on Left; Part B on Right) */
+.d1-upper-grid {
+  display: grid;
+  grid-template-columns: 0.96fr 1.04fr;
+  column-gap: 12px;
+  margin-bottom: 8px;
+}
+
+.d1-left-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.wehu-box {
+  border: 1.4px solid var(--border-dark);
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+.send-to-box {
+  padding: 8px 11px 10px 11px;
+  font-size: 12px;
+  line-height: 1.42;
+}
+
+.inline-line-input {
+  border: none;
+  border-bottom: 1.2px solid #222222;
+  background: transparent;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #111111;
+  padding: 0 4px;
+  width: 145px;
+  outline: none;
+}
+
+.part-header {
+  background: var(--header-gray);
+  border-bottom: 1.4px solid var(--border-dark);
+  padding: 5px 10px;
+  font-weight: 700;
+  font-size: 12.5px;
+  color: #111111;
+}
+
+.part-header.centered {
+  text-align: center;
+  padding: 6px 10px;
+}
+
+.part-header-sub {
+  font-weight: 400;
+  font-size: 11.4px;
+  margin-top: 1px;
+}
+
+.part-body {
+  padding: 7px 10px 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.field-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11.6px;
+  color: #111111;
+}
+
+/* Shaded Form Inputs (Matching WEHU FORM_D gray boxes) */
+.shaded-input,
+.shaded-select {
+  width: 100%;
+  height: 22px;
+  background: var(--box-fill);
+  border: 1px solid #444444;
+  padding: 1px 6px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #111111;
+  outline: none;
+}
+
+.shaded-textarea {
+  width: 100%;
+  background: var(--box-fill);
+  border: 1px solid #444444;
+  padding: 4px 6px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: #111111;
+  resize: none;
+  outline: none;
+  line-height: 1.28;
+}
+
+.shaded-input:focus,
+.shaded-select:focus,
+.shaded-textarea:focus {
+  background: var(--focus-tint);
+  border-color: #1d4ed8;
+}
+
+/* Shaded Date/Time Picker Combo */
+.shaded-picker-combo {
+  display: flex;
+  align-items: center;
+  background: var(--box-fill);
+  border: 1px solid #444444;
+  height: 22px;
+  position: relative;
+}
+
+.shaded-picker-combo:focus-within {
+  background: var(--focus-tint);
+  border-color: #1d4ed8;
+}
+
+.shaded-picker-combo input[type="text"] {
+  border: none;
+  background: transparent;
+  width: 100%;
+  height: 100%;
+  padding: 1px 6px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 12.4px;
+  font-weight: 700;
+  color: #111111;
+  outline: none;
+}
+
+.picker-icon-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  padding: 0 4px;
+  line-height: 1;
+  opacity: 0.75;
+}
+
+.picker-icon-btn:hover {
+  opacity: 1;
+}
+
+.hidden-native-picker {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ddmmyy-caption {
+  font-size: 10px;
+  letter-spacing: 0.3px;
+  color: #222222;
+  display: flex;
+  gap: 18px;
+  padding-left: 4px;
+  margin-top: 1px;
+}
+
+.two-col-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 10px;
+  align-items: start;
+}
+
+/* Shaded Square Checkbox */
+.wehu-check-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 11.8px;
+}
+
+.wehu-check {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  background: var(--box-fill);
+  border: 1px solid #333333;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.wehu-check:checked::after {
+  content: "✓";
+  font-size: 13px;
+  font-weight: 800;
+  color: #111111;
+  line-height: 1;
+}
+
+/* Part C Layout */
+.partc-body {
+  padding: 7px 12px 9px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.partc-row {
+  display: grid;
+  grid-template-columns: 195px 1fr;
+  column-gap: 12px;
+  align-items: start;
+}
+
+.partc-label {
+  text-align: right;
+  font-size: 11.8px;
+  padding-top: 3px;
+}
+
+/* Part D Layout */
+.partd-box {
+  margin-top: 8px;
+  flex: 1;
+  min-height: 0;
+}
+
+.partd-body {
+  padding: 7px 12px 8px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 5px;
+  flex: 1;
+}
+
+.partd-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.partd-q {
+  font-size: 11.8px;
+  line-height: 1.26;
+}
+
+.partd-line-input {
+  width: 100%;
+  border: none;
+  border-bottom: 1px dotted #666666;
+  background: transparent;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 12.2px;
+  font-weight: 700;
+  color: #111111;
+  padding: 2px 4px;
+  outline: none;
+}
+
+.partd-line-input:focus {
+  background: var(--focus-tint);
+}
+
+.duration-triple {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding-left: 18px;
+  padding-top: 2px;
+}
+
+.dur-unit-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11.6px;
+}
+
+.dur-small-box {
+  width: 48px;
+  height: 21px;
+  background: var(--box-fill);
+  border: 1px solid #444444;
+  text-align: center;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 12.4px;
+  font-weight: 700;
+  outline: none;
+}
+
+/* Bottom Signature & Stamp Row */
+.d1-footer-grid {
+  display: grid;
+  grid-template-columns: 0.92fr 1.08fr;
+  column-gap: 16px;
+  margin-top: 8px;
+  align-items: end;
+}
+
+.sig-left-col {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.sig-row {
+  display: grid;
+  grid-template-columns: 118px 1fr;
+  column-gap: 8px;
+  align-items: center;
+  font-size: 11.6px;
+}
+
+.sig-row .sig-label {
+  text-align: right;
+}
+
+/* ==================== PAGE 2: WEHU - D2 ==================== */
+.d2-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.d2-q-row {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  align-items: start;
+  font-size: 12px;
+}
+
+.d2-num {
+  font-weight: 400;
+  padding-top: 1px;
+}
+
+.d2-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.d2-italic-note {
+  font-style: italic;
+  font-size: 11.4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tick-sample-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  border: 1px solid #333333;
+  background: var(--box-fill);
+  font-style: normal;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.underline-input {
+  border: none;
+  border-bottom: 1.1px solid #222222;
+  background: transparent;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 12.2px;
+  font-weight: 700;
+  color: #111111;
+  padding: 0 4px;
+  height: 19px;
+  outline: none;
+}
+
+.underline-input:focus {
+  background: var(--focus-tint);
+}
+
+.d2-agent-row {
+  display: grid;
+  grid-template-columns: 112px 320px;
+  align-items: center;
+  gap: 8px;
+}
+
+.d2-check-2col {
+  display: grid;
+  grid-template-columns: 0.92fr 1.08fr;
+  column-gap: 18px;
+  margin-top: 2px;
+}
+
+.d2-check-list {
+  display: flex;
+  flex-direction: column;
+  gap: 3.5px;
+}
+
+.d2-q8-q9-split {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  column-gap: 16px;
+}
+
+.small-days-line {
+  width: 56px;
+  border: none;
+  border-bottom: 1.1px solid #222222;
+  background: transparent;
+  text-align: center;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 12.2px;
+  font-weight: 700;
+  outline: none;
+}
+
+/* Quick Facility Helper Select (hidden on print) */
+.quick-facility-select {
+  font-size: 10.5px;
+  padding: 1px 4px;
+  border: 1px solid #94a3b8;
+  border-radius: 3px;
+  background: #f8fafc;
+  color: #1e293b;
+  max-width: 155px;
+}
+
+/* Modals */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.65);
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.modal-backdrop.open {
+  display: flex;
+}
+
+.modal-card {
+  background: #ffffff;
+  border-radius: 10px;
+  max-width: 780px;
+  width: 100%;
+  max-height: 88vh;
+  overflow-y: auto;
+  padding: 20px 24px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  color: #64748b;
+}
+
+.extra-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.extra-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.extra-field label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.extra-field input,
+.extra-field select {
+  padding: 7px 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 5px;
+  font-size: 13px;
+}
+
+/* Print Exact A4 Replica */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
+  body {
+    background: #ffffff;
+    padding: 0;
+  }
+
+  .control-bar,
+  .status-banner,
+  .modal-backdrop,
+  .no-print,
+  .picker-icon-btn,
+  .quick-facility-select {
+    display: none !important;
+  }
+
+  .pages-container {
+    gap: 0;
+    padding: 0;
+  }
+
+  .form-page {
+    box-shadow: none;
+    border: none;
+    width: 210mm;
+    height: 297mm;
+    page-break-after: always;
+    break-after: page;
+    display: flex !important;
+  }
+
+  .form-page:last-child {
+    page-break-after: auto;
+    break-after: auto;
+  }
+
+  .shaded-select {
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: transparent !important;
+  }
+}

@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WEHU - D1 &amp; D2 (JKKP 7) - Notification of Occupational Poisoning / Disease</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Sticky Control Bar (Hidden on Print) -->
+  <header class="control-bar">
+    <div class="control-bar-left">
+      <span class="brand-badge">WEHU-D1 / D2</span>
+      <span class="control-title">Borang Notifikasi Keracunan / Penyakit Pekerjaan (JKKP 7)</span>
+    </div>
+
+    <nav class="page-nav" aria-label="Navigasi Halaman">
+      <button type="button" class="page-nav-btn active" data-page="all">Semua (D1 &amp; D2)</button>
+      <button type="button" class="page-nav-btn" data-page="1">WEHU - D1</button>
+      <button type="button" class="page-nav-btn" data-page="2">WEHU - D2</button>
+    </nav>
+
+    <div class="control-actions">
+      <button type="button" class="btn btn-outline" id="btn-open-record">Buka Rekod (IC &amp; Tarikh)</button>
+      <button type="button" class="btn btn-secondary" id="btn-extra-meta">Medan Tambahan Sheet</button>
+      <button type="button" class="btn btn-secondary" id="btn-gas-config">Sambungan Apps Script</button>
+      <button type="button" class="btn btn-secondary" id="btn-demo">Isi Contoh</button>
+      <button type="button" class="btn btn-secondary" id="btn-reset">Kosongkan</button>
+      <button type="button" class="btn btn-outline" id="btn-preview-row">Semak 65 Lajur</button>
+      <button type="button" class="btn btn-print" id="btn-print">Cetak / PDF</button>
+      <button type="button" class="btn btn-primary" id="btn-submit">Hantar ke Google Sheet</button>
+    </div>
+  </header>
+
+  <!-- Status Banner -->
+  <div id="status-banner" class="status-banner" role="status">
+    <span id="status-message"></span>
+    <a href="https://docs.google.com/spreadsheets/d/1zmq-qaZW5EGiWWGAJ1a1zhgGch11AhdMRUI7lI7wRJg/edit" target="_blank" rel="noopener" style="color:inherit;font-weight:700;text-decoration:underline;">Buka Google Sheet WEHU_D</a>
+  </div>
+
+  <!-- Shared Datalists -->
+  <datalist id="nationality-list">
+    <option value="MALAYSIA"></option>
+  </datalist>
+
+  <datalist id="ethnic-list">
+    <option value="MELAYU"></option>
+    <option value="CINA"></option>
+    <option value="INDIA"></option>
+    <option value="ORANG ASLI"></option>
+    <option value="BUMIPUTERA SABAH"></option>
+    <option value="BUMIPUTERA SARAWAK"></option>
+    <option value="LAIN-LAIN"></option>
+  </datalist>
+
+  <!-- 2-Page Official Form Replica -->
+  <form id="wehu-d-form" class="pages-container" autocomplete="off" onsubmit="return false;">
+
+    <!-- ==================== PAGE 1: WEHU - D1 (JKKP 7) ==================== -->
+    <section class="form-page" id="page-1" data-page-num="1">
+
+      <!-- Top Title Banner & WEHU-D1 Stamp -->
+      <div class="d1-top-header">
+        <div class="d1-banner-wrap">
+          <div class="d1-dark-banner">NOTIFICATION OF OCCUPATIONAL POISONING/ DISEASE</div>
+        </div>
+        <div class="wehu-code-stamp">
+          WEHU - D1<br />(JKKP 7)
+        </div>
+      </div>
+
+      <!-- Upper 2-Column Section: Left (Send To + Part A), Right (Part B) -->
+      <div class="d1-upper-grid">
+
+        <!-- Left Stack -->
+        <div class="d1-left-stack">
+          <div class="wehu-box send-to-box">
+            <div>Send to:</div>
+            <div>Pengarah Kesihatan Negeri</div>
+            <div>
+              Jabatan Kesihatan Negeri
+              <input type="text" id="send-to-jkn" class="inline-line-input" value="KEDAH" readonly />
+            </div>
+          </div>
+
+          <div class="wehu-box" style="flex: 1;">
+            <div class="part-header">
+              <div>Part A - Notifier</div>
+              <div class="part-header-sub">(Regulation 7(2) Registered Medical Practitioner)</div>
+            </div>
+            <div class="part-body">
+              <div class="field-group">
+                <div class="field-label-row"><span>Name</span></div>
+                <input type="text" id="parta-name" class="shaded-input" />
+              </div>
+
+              <div class="field-group">
+                <div class="field-label-row"><span>Designation</span></div>
+                <input type="text" id="parta-designation" class="shaded-input" />
+              </div>
+
+              <div class="field-group" style="flex: 1;">
+                <div class="field-label-row">
+                  <span>Address of clinic / hospital</span>
+                  <select id="parta-quick-facility" class="quick-facility-select no-print" title="Pilih pantas fasiliti KKM Kedah">
+                    <option value="">+ Pilih Fasiliti Kedah</option>
+                    <optgroup label="HOSPITAL">
+                      <option value="HOSPITAL BALING">HOSPITAL BALING</option>
+                      <option value="HOSPITAL SULTANAH BAHIYAH">HOSPITAL SULTANAH BAHIYAH</option>
+                      <option value="HOSPITAL SULTANAH MALIHA">HOSPITAL SULTANAH MALIHA</option>
+                      <option value="HOSPITAL JITRA">HOSPITAL JITRA</option>
+                      <option value="HOSPITAL KUALA NERANG">HOSPITAL KUALA NERANG</option>
+                      <option value="HOSPITAL SIK">HOSPITAL SIK</option>
+                      <option value="HOSPITAL SULTAN ABDUL HALIM">HOSPITAL SULTAN ABDUL HALIM</option>
+                      <option value="HOSPITAL YAN">HOSPITAL YAN</option>
+                      <option value="HOSPITAL PENDANG">HOSPITAL PENDANG</option>
+                      <option value="HOSPITAL KULIM">HOSPITAL KULIM</option>
+                    </optgroup>
+                    <optgroup label="PKD">
+                      <option value="PKD BALING">PKD BALING</option>
+                      <option value="PKD BANDAR BAHARU">PKD BANDAR BAHARU</option>
+                      <option value="PKD KOTA SETAR">PKD KOTA SETAR</option>
+                      <option value="PKD KUALA MUDA">PKD KUALA MUDA</option>
+                      <option value="PKD KUBANG PASU">PKD KUBANG PASU</option>
+                      <option value="PKD KULIM">PKD KULIM</option>
+                      <option value="PKD LANGKAWI">PKD LANGKAWI</option>
+                      <option value="PKD PADANG TERAP">PKD PADANG TERAP</option>
+                      <option value="PKD PENDANG">PKD PENDANG</option>
+                      <option value="PKD SIK">PKD SIK</option>
+                      <option value="PKD YAN">PKD YAN</option>
+                    </optgroup>
+                    <optgroup label="PKPD">
+                      <option value="PKPD BALING">PKPD BALING</option>
+                      <option value="PKPD BANDAR BAHARU">PKPD BANDAR BAHARU</option>
+                      <option value="PKPD KOTA SETAR">PKPD KOTA SETAR</option>
+                      <option value="PKPD KUALA MUDA">PKPD KUALA MUDA</option>
+                      <option value="PKPD KUBANG PASU">PKPD KUBANG PASU</option>
+                      <option value="PKPD KULIM">PKPD KULIM</option>
+                      <option value="PKPD LANGKAWI">PKPD LANGKAWI</option>
+                      <option value="PKPD PADANG TERAP">PKPD PADANG TERAP</option>
+                      <option value="PKPD PENDANG">PKPD PENDANG</option>
+                      <option value="PKPD SIK">PKPD SIK</option>
+                      <option value="PKPD YAN">PKPD YAN</option>
+                    </optgroup>
+                  </select>
+                </div>
+                <textarea id="parta-address" class="shaded-textarea" style="flex: 1; min-height: 74px;"></textarea>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 78px 1fr; align-items: center; gap: 6px; margin-top: 2px;">
+                <span style="font-size: 11.6px;">Contact no.</span>
+                <input type="text" id="parta-contact" class="shaded-input digits-only-input" inputmode="numeric" pattern="[0-9]*" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Box: Part B - Affected person -->
+        <div class="wehu-box">
+          <div class="part-header centered" style="padding: 9px 10px;">Part B - Affected person</div>
+          <div class="part-body">
+            <div class="field-group">
+              <div class="field-label-row"><span>Name</span></div>
+              <input type="text" id="partb-name" class="shaded-input" />
+            </div>
+
+            <div class="two-col-row">
+              <div class="field-group">
+                <div class="field-label-row"><span>Date of Birth</span></div>
+                <div class="shaded-picker-combo">
+                  <input type="text" id="partb-dob" class="date-slash-input" placeholder="DD/MM/YYYY" maxlength="10" inputmode="numeric" />
+                  <button type="button" class="picker-icon-btn no-print" data-picker-for="partb-dob" title="Pilih tarikh lahir">&#128197;</button>
+                  <input type="date" class="hidden-native-picker" data-sync-target="partb-dob" tabindex="-1" />
+                </div>
+                <div class="ddmmyy-caption"><span>DD</span><span>MM</span><span>YY</span></div>
+              </div>
+              <div class="field-group">
+                <div class="field-label-row"><span>New IC/ Passport no.</span></div>
+                <input type="text" id="partb-ic" class="shaded-input" />
+              </div>
+            </div>
+
+            <div class="two-col-row">
+              <div class="field-group">
+                <div class="field-label-row"><span>Nationality</span></div>
+                <input type="text" id="partb-nationality" list="nationality-list" class="shaded-input" />
+              </div>
+              <div class="field-group">
+                <div class="field-label-row"><span>Gender</span></div>
+                <div style="display: flex; align-items: center; gap: 14px; height: 22px;">
+                  <label class="wehu-check-label">
+                    <input type="checkbox" class="wehu-check single-group" data-group="gender" value="MALE" id="gender-male" />
+                    <span>Male</span>
+                  </label>
+                  <label class="wehu-check-label">
+                    <input type="checkbox" class="wehu-check single-group" data-group="gender" value="FEMALE" id="gender-female" />
+                    <span>Female</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="two-col-row">
+              <div class="field-group">
+                <div class="field-label-row"><span>Ethnic Group</span></div>
+                <input type="text" id="partb-ethnic" list="ethnic-list" class="shaded-input" />
+              </div>
+              <div class="field-group">
+                <div class="field-label-row"><span>Occupation</span></div>
+                <input type="text" id="partb-occupation" class="shaded-input" />
+              </div>
+            </div>
+
+            <div class="field-group">
+              <div class="field-label-row"><span>Name and address of organization</span></div>
+              <textarea id="partb-org" class="shaded-textarea" style="height: 54px;"></textarea>
+            </div>
+
+            <div class="two-col-row">
+              <div class="field-group">
+                <div class="field-label-row"><span>District</span></div>
+                <select id="partb-district" class="shaded-select">
+                  <option value=""></option>
+                  <option value="BALING">BALING</option>
+                  <option value="BANDAR BAHARU">BANDAR BAHARU</option>
+                  <option value="KOTA SETAR">KOTA SETAR</option>
+                  <option value="KUALA MUDA">KUALA MUDA</option>
+                  <option value="KUBANG PASU">KUBANG PASU</option>
+                  <option value="KULIM">KULIM</option>
+                  <option value="LANGKAWI">LANGKAWI</option>
+                  <option value="PADANG TERAP">PADANG TERAP</option>
+                  <option value="PENDANG">PENDANG</option>
+                  <option value="SIK">SIK</option>
+                  <option value="YAN">YAN</option>
+                </select>
+              </div>
+              <div class="field-group">
+                <div class="field-label-row"><span>State</span></div>
+                <input type="text" id="partb-state" class="shaded-input" value="KEDAH" readonly />
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 112px 1fr; align-items: center; gap: 6px; margin-top: 2px;">
+              <span style="font-size: 11.6px;">Location of incident</span>
+              <input type="text" id="partb-location" class="shaded-input" />
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Part C - Occupational Poisoning/ Disease -->
+      <div class="wehu-box">
+        <div class="part-header centered">Part C - Occupational Poisoning/ Disease</div>
+        <div class="partc-body">
+          <div class="partc-row">
+            <div class="partc-label">Date of diagnosis</div>
+            <div style="max-width: 175px;">
+              <div class="shaded-picker-combo">
+                <input type="text" id="partc-diag-date" class="date-slash-input" placeholder="DD/MM/YYYY" maxlength="10" inputmode="numeric" />
+                <button type="button" class="picker-icon-btn no-print" data-picker-for="partc-diag-date" title="Pilih tarikh diagnosis">&#128197;</button>
+                <input type="date" class="hidden-native-picker" data-sync-target="partc-diag-date" tabindex="-1" />
+              </div>
+              <div class="ddmmyy-caption"><span>DD</span><span>MM</span><span>YY</span></div>
+            </div>
+          </div>
+          <div class="partc-row">
+            <div class="partc-label">Diagnosis/ Provisional diagnosis</div>
+            <textarea id="partc-diagnosis" class="shaded-textarea" style="height: 40px;"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Part D -->
+      <div class="wehu-box partd-box">
+        <div class="part-header centered">Part D</div>
+        <div class="partd-body">
+          <div class="partd-item">
+            <div class="partd-q">
+              a)&nbsp; What kind of work did the patient do which may be associated with the disease?<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Describe the work activities)
+            </div>
+            <input type="text" id="partd-work-1" class="partd-line-input" />
+            <input type="text" id="partd-work-2" class="partd-line-input" />
+          </div>
+
+          <div class="partd-item">
+            <div class="partd-q">b)&nbsp; What was the hazard or agent been exposed to the patient?</div>
+            <input type="text" id="partd-hazard" class="partd-line-input" />
+          </div>
+
+          <div class="partd-item">
+            <div class="partd-q">c)&nbsp; How long had the patient been exposed to the hazard or agent?</div>
+            <div class="duration-triple">
+              <label class="dur-unit-item">
+                <input type="text" id="partd-exp-day" class="dur-small-box digits-only-input" inputmode="numeric" placeholder="0" />
+                <span>day(s)</span>
+              </label>
+              <label class="dur-unit-item">
+                <input type="text" id="partd-exp-month" class="dur-small-box digits-only-input" inputmode="numeric" placeholder="0" />
+                <span>month(s)</span>
+              </label>
+              <label class="dur-unit-item">
+                <input type="text" id="partd-exp-year" class="dur-small-box digits-only-input" inputmode="numeric" placeholder="0" />
+                <span>year(s)</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="partd-item">
+            <div class="partd-q">d)&nbsp; How long had the patient been experiencing the symptoms?</div>
+            <div class="duration-triple">
+              <label class="dur-unit-item">
+                <input type="text" id="partd-symp-day" class="dur-small-box digits-only-input" inputmode="numeric" placeholder="0" />
+                <span>day(s)</span>
+              </label>
+              <label class="dur-unit-item">
+                <input type="text" id="partd-symp-month" class="dur-small-box digits-only-input" inputmode="numeric" placeholder="0" />
+                <span>month(s)</span>
+              </label>
+              <label class="dur-unit-item">
+                <input type="text" id="partd-symp-year" class="dur-small-box digits-only-input" inputmode="numeric" placeholder="0" />
+                <span>year(s)</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Signature & Official Stamp -->
+      <div class="d1-footer-grid">
+        <div class="sig-left-col">
+          <div class="sig-row">
+            <span class="sig-label">Signature of Notifier</span>
+            <input type="text" id="sig-notifier" class="shaded-input" style="height: 36px;" placeholder="Nama / Tandatangan" />
+          </div>
+          <div class="sig-row">
+            <span class="sig-label">Date</span>
+            <div style="max-width: 155px;">
+              <div class="shaded-picker-combo">
+                <input type="text" id="sig-date" class="date-slash-input" placeholder="DD/MM/YYYY" maxlength="10" inputmode="numeric" />
+                <button type="button" class="picker-icon-btn no-print" data-picker-for="sig-date" title="Pilih tarikh notifikasi">&#128197;</button>
+                <input type="date" class="hidden-native-picker" data-sync-target="sig-date" tabindex="-1" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <div class="field-label-row"><span>Name and address of attending doctor (Official Stamp)</span></div>
+          <textarea id="attending-doctor" class="shaded-textarea" style="height: 68px;"></textarea>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ==================== PAGE 2: WEHU - D2 ==================== -->
+    <section class="form-page" id="page-2" data-page-num="2">
+      <div class="d2-container">
+
+        <!-- Question 1 + Top-right WEHU - D2 Stamp -->
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+          <div class="d2-q-row" style="flex: 1;">
+            <span class="d2-num">1.</span>
+            <div class="d2-content">
+              <span>Date of occurrence</span>
+              <div style="max-width: 185px;">
+                <div class="shaded-picker-combo">
+                  <input type="text" id="d2-occ-date" class="date-slash-input" placeholder="DD/MM/YYYY" maxlength="10" inputmode="numeric" />
+                  <button type="button" class="picker-icon-btn no-print" data-picker-for="d2-occ-date" title="Pilih tarikh kejadian">&#128197;</button>
+                  <input type="date" class="hidden-native-picker" data-sync-target="d2-occ-date" tabindex="-1" />
+                </div>
+                <div class="ddmmyy-caption"><span>DD</span><span>MM</span><span>YY</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="wehu-code-stamp">WEHU - D2</div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="d2-q-row">
+          <span class="d2-num">2.</span>
+          <div class="d2-content">
+            <span>Time</span>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <div class="shaded-picker-combo" style="width: 185px;">
+                <input type="text" id="d2-occ-time" class="time-colon-input" placeholder="hh:mm" maxlength="5" inputmode="numeric" />
+                <button type="button" class="picker-icon-btn no-print" data-time-picker-for="d2-occ-time" title="Pilih masa kejadian">&#128338;</button>
+                <input type="time" class="hidden-native-picker" data-time-sync-target="d2-occ-time" tabindex="-1" />
+              </div>
+              <span>hrs</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="d2-q-row">
+          <span class="d2-num">3.</span>
+          <div class="d2-content">
+            <span>Place of occurrence</span>
+            <div style="display: flex; align-items: center; gap: 36px; flex-wrap: wrap; margin-top: 2px;">
+              <label class="wehu-check-label">
+                <input type="checkbox" class="wehu-check single-group" data-group="place_occ" data-section="place_occ" value="Home" />
+                <span>Home</span>
+              </label>
+              <label class="wehu-check-label">
+                <input type="checkbox" class="wehu-check single-group" data-group="place_occ" data-section="place_occ" value="Workplace" />
+                <span>Workplace</span>
+              </label>
+              <div style="display: inline-flex; align-items: center; gap: 6px;">
+                <label class="wehu-check-label">
+                  <input type="checkbox" class="wehu-check single-group" data-group="place_occ" data-section="place_occ" data-item-id="place_others" value="Others" />
+                  <span>Others</span>
+                </label>
+                <input type="text" id="d2-place-others" class="underline-input" style="width: 170px;" placeholder="Specify if Others" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Question 4 -->
+        <div class="d2-q-row">
+          <span class="d2-num">4.</span>
+          <div class="d2-content" style="gap: 5px;">
+            <span>Name(s) of poisoning agent(s)</span>
+            <div class="d2-agent-row">
+              <span>Trade name</span>
+              <input type="text" id="d2-trade-name" class="underline-input" style="width: 100%;" />
+            </div>
+            <div class="d2-agent-row">
+              <span>Active ingredient</span>
+              <input type="text" id="d2-active-ingredient" class="underline-input" style="width: 100%;" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Question 5 -->
+        <div class="d2-q-row">
+          <span class="d2-num">5.</span>
+          <div class="d2-content">
+            <span>Type of poisoning</span>
+            <div class="d2-check-list" style="margin-top: 2px;">
+              <label class="wehu-check-label">
+                <input type="checkbox" class="wehu-check" data-section="type_poisoning" value="Pesticide" />
+                <span>Pesticide ; &nbsp; Proceed to Question 6</span>
+              </label>
+              <label class="wehu-check-label">
+                <input type="checkbox" class="wehu-check" data-section="type_poisoning" value="Chemical" />
+                <span>Chemical ; &nbsp; Proceed to Question 7</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Question 6 (Populated dynamically by app.js) -->
+        <div class="d2-q-row" id="d2-q6-row"></div>
+
+        <!-- Question 7 (Populated dynamically by app.js) -->
+        <div class="d2-q-row" id="d2-q7-row"></div>
+
+        <!-- Question 8 & Question 9 Side-by-Side -->
+        <div class="d2-q8-q9-split">
+          <div class="d2-q-row" id="d2-q8-row"></div>
+          <div class="d2-q-row" id="d2-q9-row"></div>
+        </div>
+
+        <!-- Question 10 -->
+        <div class="d2-q-row">
+          <span class="d2-num">10.</span>
+          <div class="d2-content">
+            <span>Was first aid given at the site of poisoning?</span>
+            <div class="d2-check-list" style="margin-top: 2px;">
+              <label class="wehu-check-label">
+                <input type="checkbox" class="wehu-check single-group" data-group="first_aid" data-section="first_aid" value="Yes" />
+                <span>Yes</span>
+              </label>
+              <label class="wehu-check-label">
+                <input type="checkbox" class="wehu-check single-group" data-group="first_aid" data-section="first_aid" value="No" />
+                <span>No</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Question 11 -->
+        <div class="d2-q-row">
+          <span class="d2-num">11.</span>
+          <div class="d2-content">
+            <span>Is poisoning confirmed by laboratory investigation ?</span>
+            <div style="display: flex; align-items: center; gap: 42px; margin-top: 2px;">
+              <label class="wehu-check-label">
+                <input type="checkbox" class="wehu-check single-group" data-group="lab_confirm" data-section="lab_confirm" value="Yes" />
+                <span>Yes</span>
+              </label>
+              <label class="wehu-check-label">
+                <input type="checkbox" class="wehu-check single-group" data-group="lab_confirm" data-section="lab_confirm" value="No" />
+                <span>No</span>
+              </label>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-top: 2px;">
+              <label class="wehu-check-label">
+                <input type="checkbox" class="wehu-check single-group" data-group="lab_confirm" data-section="lab_confirm" data-item-id="lab_others" value="Others" />
+                <span>Others (please specify) &nbsp; :</span>
+              </label>
+              <input type="text" id="d2-lab-others" class="underline-input" style="width: 220px;" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Question 12 -->
+        <div class="d2-q-row">
+          <span class="d2-num">12.</span>
+          <div class="d2-content">
+            <span>Outcome of poisoning</span>
+            <div class="d2-check-2col" style="margin-top: 2px;">
+              <div class="d2-check-list">
+                <label class="wehu-check-label">
+                  <input type="checkbox" class="wehu-check single-group" data-group="outcome" data-section="outcome" value="Outpatient treatment" />
+                  <span>Outpatient treatment</span>
+                </label>
+                <div style="display: flex; align-items: center; gap: 4px;">
+                  <label class="wehu-check-label">
+                    <input type="checkbox" class="wehu-check single-group" data-group="outcome" data-section="outcome" data-item-id="outcome_admitted" value="Admitted to ward" />
+                    <span>Admitted to ward for</span>
+                  </label>
+                  <input type="text" id="d2-admitted-days" class="small-days-line digits-only-input" inputmode="numeric" />
+                  <span>days</span>
+                </div>
+                <label class="wehu-check-label">
+                  <input type="checkbox" class="wehu-check single-group" data-group="outcome" data-section="outcome" value="Dead on arrival at hospital" />
+                  <span>Dead on arrival at hospital</span>
+                </label>
+              </div>
+              <div class="d2-check-list">
+                <div style="display: flex; align-items: center; gap: 4px;">
+                  <label class="wehu-check-label">
+                    <input type="checkbox" class="wehu-check single-group" data-group="outcome" data-section="outcome" data-item-id="outcome_died" value="Died after days treated in the ward" />
+                    <span>Died after</span>
+                  </label>
+                  <input type="text" id="d2-died-days" class="small-days-line digits-only-input" inputmode="numeric" />
+                  <span>days treated in the ward</span>
+                </div>
+                <label class="wehu-check-label">
+                  <input type="checkbox" class="wehu-check single-group" data-group="outcome" data-section="outcome" value="Discharge at own risk" />
+                  <span>Discharge at own risk</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </form>
+
+  <!-- Modal 1: Administrative Extra Sheet Fields (Columns in WEHU_D Sheet not directly on paper) -->
+  <div class="modal-backdrop" id="extra-modal">
+    <div class="modal-card" style="max-width: 650px;">
+      <div class="modal-header">
+        <h3>Medan Pentadbiran Tambahan (Google Sheet WEHU_D)</h3>
+        <button type="button" class="modal-close" id="btn-close-extra">&times;</button>
+      </div>
+      <p style="font-size:12.5px;color:#475569;margin-bottom:14px;">
+        Lajur daftar tambahan untuk melengkapkan kesemua 64 lajur data dalam Google Sheet <strong>WEHU_D</strong> (tidak dicetak pada borang kertas):
+      </p>
+      <div class="extra-grid">
+        <div class="extra-field">
+          <label for="reg-date-entry">DATE OF ENTRY (dd/mm/yyyy) — Lajur B</label>
+          <input type="text" id="reg-date-entry" class="date-slash-input" maxlength="10" inputmode="numeric" placeholder="DD/MM/YYYY" />
+        </div>
+        <div class="extra-field">
+          <label for="reg-case-code">CASE CODE — Lajur C</label>
+          <input type="text" id="reg-case-code" placeholder="Contoh: KDH/WEHUD/2026/001" />
+        </div>
+        <div class="extra-field">
+          <label for="reg-occ-class">OCCUPATIONAL CLASS — Lajur R</label>
+          <input type="text" id="reg-occ-class" placeholder="Contoh: AGRICULTURAL / HEALTHCARE" />
+        </div>
+        <div class="extra-field">
+          <label for="reg-facility-type">TYPE OF FACILITY — Lajur S</label>
+          <select id="reg-facility-type">
+            <option value="">(Auto-kesan daripada alamat fasiliti)</option>
+            <option value="HOSPITAL">HOSPITAL</option>
+            <option value="PKD">PKD</option>
+            <option value="PKPD">PKPD</option>
+            <option value="KLINIK KESIHATAN">KLINIK KESIHATAN</option>
+            <option value="SWASTA">KLINIK / HOSPITAL SWASTA</option>
+            <option value="OTHERS">OTHERS</option>
+          </select>
+        </div>
+        <div class="extra-field">
+          <label for="reg-department">DEPARTMENT — Lajur U</label>
+          <input type="text" id="reg-department" placeholder="Contoh: JABATAN KECEMASAN" />
+        </div>
+        <div class="extra-field">
+          <label for="reg-unit">UNIT — Lajur V</label>
+          <input type="text" id="reg-unit" placeholder="Contoh: ZON MERAH" />
+        </div>
+        <div class="extra-field">
+          <label for="reg-status-case">STATUS CASE — Lajur AN</label>
+          <select id="reg-status-case">
+            <option value="">-- Pilih Status Kes --</option>
+            <option value="CONFIRMED">CONFIRMED</option>
+            <option value="PROBABLE">PROBABLE</option>
+            <option value="SUSPECTED">SUSPECTED</option>
+            <option value="NOT OCCUPATIONAL">NOT OCCUPATIONAL</option>
+          </select>
+        </div>
+        <div class="extra-field">
+          <label for="reg-others-outcome">OTHERS OUTCOMES — Lajur BJ</label>
+          <input type="text" id="reg-others-outcome" placeholder="Catatan tambahan outcome (jika ada)" />
+        </div>
+        <div class="extra-field">
+          <label for="reg-kod-kkm">No Kod KKM — Lajur BK</label>
+          <input type="text" id="reg-kod-kkm" placeholder="Contoh: KKM/JKNK/..." />
+        </div>
+        <div class="extra-field">
+          <label for="reg-siasatan">SIASATAN — Lajur BL</label>
+          <select id="reg-siasatan">
+            <option value="">-- Pilih Status Siasatan --</option>
+            <option value="SELESAI">SELESAI</option>
+            <option value="DALAM SIASATAN">DALAM SIASATAN</option>
+            <option value="BELUM DISIASAT">BELUM DISIASAT</option>
+          </select>
+        </div>
+      </div>
+      <div style="margin-top:16px;text-align:right;">
+        <button type="button" class="btn btn-primary" id="btn-save-extra">Simpan &amp; Tutup</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Preview 65 Columns -->
+  <div class="modal-backdrop" id="preview-modal">
+    <div class="modal-card" style="max-width: 880px;">
+      <div class="modal-header">
+        <h3>Pratonton Data Google Sheet WEHU_D (64 Lajur + Rekod_Link)</h3>
+        <button type="button" class="modal-close" id="btn-close-preview">&times;</button>
+      </div>
+      <div id="preview-table-container" style="max-height: 62vh; overflow-y: auto; border: 1px solid #e2e8f0; border-radius: 6px;"></div>
+    </div>
+  </div>
+
+  <!-- Modal 3: Lookup Record by (NEW IC / PASSPORT NO., DATE OF ENTRY) -->
+  <div class="modal-backdrop" id="lookup-modal">
+    <div class="modal-card" style="max-width: 520px;">
+      <div class="modal-header">
+        <h3>Buka Semula Rekod WEHU_D</h3>
+        <button type="button" class="modal-close" id="btn-close-lookup">&times;</button>
+      </div>
+      <p style="font-size:12.5px;color:#475569;margin-bottom:14px;">
+        Masukkan <strong>NEW IC / PASSPORT NO.</strong> dan <strong>DATE OF ENTRY (dd/mm/yyyy)</strong> untuk memuatkan semula data ke dalam borang, atau klik terus pautan pada lajur <strong>Rekod_Link</strong> di dalam Google Sheet.
+      </p>
+      <div class="extra-grid" style="grid-template-columns: 1fr;">
+        <div class="extra-field">
+          <label for="lookup-ic">NEW IC / PASSPORT NO. (Lajur L)</label>
+          <input type="text" id="lookup-ic" placeholder="Contoh: 880721024567" />
+        </div>
+        <div class="extra-field">
+          <label for="lookup-date">DATE OF ENTRY (dd/mm/yyyy) (Lajur B)</label>
+          <input type="text" id="lookup-date" class="date-slash-input" maxlength="10" inputmode="numeric" placeholder="DD/MM/YYYY" />
+        </div>
+      </div>
+      <div style="margin-top:16px;display:flex;justify-content:flex-end;gap:8px;">
+        <button type="button" class="btn btn-secondary" id="btn-cancel-lookup">Batal</button>
+        <button type="button" class="btn btn-primary" id="btn-do-lookup">Cari &amp; Buka Borang</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 4: Google Apps Script Web App Connection Settings -->
+  <div class="modal-backdrop" id="gas-modal">
+    <div class="modal-card" style="max-width: 660px;">
+      <div class="modal-header">
+        <h3>Tetapan URL Google Apps Script (WEHU_D)</h3>
+        <button type="button" class="modal-close" id="btn-close-gas">&times;</button>
+      </div>
+      <p style="font-size:13px;color:#334155;margin-bottom:12px;">
+        Untuk membolehkan penghantaran terus daripada <strong>GitHub Pages</strong> ke Google Sheet <strong>WEHU_D</strong>:
+      </p>
+      <ol style="font-size:12.5px;color:#475569;padding-left:20px;margin-bottom:14px;line-height:1.55;">
+        <li>Buka Google Sheet <a href="https://docs.google.com/spreadsheets/d/1zmq-qaZW5EGiWWGAJ1a1zhgGch11AhdMRUI7lI7wRJg/edit" target="_blank" rel="noopener">WEHU_D</a> &rarr; <strong>Extensions &gt; Apps Script</strong>.</li>
+        <li>Salin kod daripada fail <code>Code.gs</code> dalam projek ini dan tampal ke dalam editor Apps Script.</li>
+        <li>Klik <strong>Deploy &gt; New deployment</strong> (Jenis: <em>Web app</em>, Execute as: <em>Me</em>, Who has access: <em>Anyone</em>).</li>
+        <li>Tampal pautan <code>https://script.google.com/macros/s/.../exec</code> di bawah:</li>
+      </ol>
+      <div class="extra-field">
+        <label for="gas-url-input">Google Apps Script Web App URL (<code>/exec</code>)</label>
+        <input type="url" id="gas-url-input" placeholder="https://script.google.com/macros/s/.../exec" />
+      </div>
+      <div style="margin-top:16px;display:flex;justify-content:flex-end;gap:8px;">
+        <button type="button" class="btn btn-secondary" id="btn-cancel-gas">Tutup</button>
+        <button type="button" class="btn btn-primary" id="btn-save-gas">Simpan URL</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
