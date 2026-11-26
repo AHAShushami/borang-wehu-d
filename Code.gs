@@ -148,6 +148,10 @@ function doPost(e) {
     const nextNo = lastDataRow >= 1 ? lastDataRow : 1;
     row[0] = nextNo;
 
+    // Auto-stamp DATE OF ENTRY (dd/mm/yyyy) in Column B (index 1) upon submission
+    const tz = ss.getSpreadsheetTimeZone() || "Asia/Kuala_Lumpur";
+    row[1] = Utilities.formatDate(new Date(), tz, "dd/MM/yyyy");
+
     sheet.getRange(lastDataRow + 1, 1, 1, dataCols).setValues([row]);
 
     return ContentService.createTextOutput(

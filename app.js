@@ -456,9 +456,26 @@ function getCheckedInSection(section) {
   return Array.from(document.querySelectorAll(`.wehu-check[data-section="${section}"]:checked`)).map(cb => cb.value);
 }
 
+function getMalaysiaTodayDdMmYyyy() {
+  try {
+    const parts = new Intl.DateTimeFormat("en-GB", {
+      timeZone: "Asia/Kuala_Lumpur",
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric"
+    }).formatToParts(new Date());
+    const dd = parts.find(p => p.type === "day")?.value || "01";
+    const mm = parts.find(p => p.type === "month")?.value || "01";
+    const yyyy = parts.find(p => p.type === "year")?.value || "2026";
+    return `${dd}/${mm}/${yyyy}`;
+  } catch (_) {
+    const now = new Date();
+    return `${String(now.getDate()).padStart(2, "0")}/${String(now.getMonth() + 1).padStart(2, "0")}/${now.getFullYear()}`;
+  }
+}
+
 function build64ColumnRow(rowNumber = "") {
-  const today = new Date();
-  const todayStr = `${String(today.getDate()).padStart(2, "0")}/${String(today.getMonth() + 1).padStart(2, "0")}/${today.getFullYear()}`;
+  const todayStr = getMalaysiaTodayDdMmYyyy();
 
   const dateEntry = document.getElementById("reg-date-entry").value.trim() || todayStr;
   const caseCode = document.getElementById("reg-case-code").value.trim();
@@ -1055,7 +1072,12 @@ async function submitToGoogleSheet() {
     return;
   }
 
+  // Automatically stamp DATE OF ENTRY (dd/mm/yyyy) at the exact moment of submission
+  const submissionDate = getMalaysiaTodayDdMmYyyy();
+  document.getElementById("reg-date-entry").value = submissionDate;
+
   const rowValues = build64ColumnRow("").map((val, idx) => {
+    if (idx === 1) return submissionDate;
     // Preserve leading zeros in Google Sheets for Notifier Contact (idx 6) and Affected IC/Passport (idx 11)
     if ((idx === 6 || idx === 11) && typeof val === "string" && /^0\d+$/.test(val)) {
       return "'" + val;
