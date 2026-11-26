@@ -326,6 +326,7 @@ body {
   height: 22px;
   background: var(--box-fill);
   border: 1px solid #444444;
+  border-radius: 0;
   padding: 1px 6px;
   font-family: "Courier New", Courier, monospace;
   font-size: 12.5px;

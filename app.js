@@ -135,19 +135,11 @@ function initD2Sections() {
 
   // Question 7: Chemicals
   const q7Left = [
-    {
-      id: "chem_pharma",
-      label: "Therapeutic drugs (pharmaceutical)",
-      value: "Therapeutic drugs (pharmaceutical)",
-      inlineInputId: "d2-pharma-specify",
-      inputWidth: "110px",
-      placeholder: "Indicate agent"
-    },
+    { id: "chem_pharma", label: "Therapeutic drugs (pharmaceutical)" },
     { id: "chem_metals", label: "Metals" },
     { id: "chem_gases", label: "Gases" },
     { id: "chem_agro", label: "Agrochemical (excluding pesticide)" },
-    { id: "chem_solvents", label: "Solvents" },
-    { id: "chem_others", label: "Others (please specify) &nbsp; :", value: "Others", inlineInputId: "d2-chemical-others", inputWidth: "155px" }
+    { id: "chem_solvents", label: "Solvents" }
   ];
   const q7Right = [
     { id: "chem_ind", label: "Other industrial chemical" },
@@ -164,6 +156,13 @@ function initD2Sections() {
       <div class="d2-check-2col">
         <div class="d2-check-list">${q7Left.map(i => renderD2CheckItem("chemical_type", i)).join("")}</div>
         <div class="d2-check-list">${q7Right.map(i => renderD2CheckItem("chemical_type", i)).join("")}</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-top:1px;">
+        <label class="wehu-check-label">
+          <input type="checkbox" class="wehu-check" data-section="chemical_type" data-item-id="chem_others" value="Others" />
+          <span>Others (please specify) &nbsp; :</span>
+        </label>
+        <input type="text" id="d2-chemical-others" class="underline-input" style="width:240px;" />
       </div>
     </div>
   `;
@@ -644,7 +643,7 @@ function clearAllFormFields() {
 
   [
     "reg-case-code", "reg-occ-class", "reg-facility-type", "reg-department",
-    "reg-unit", "reg-status-case", "reg-others-outcome", "reg-kod-kkm", "reg-siasatan"
+    "reg-unit", "reg-status-case", "d2-pharma-specify", "reg-others-outcome", "reg-kod-kkm", "reg-siasatan"
   ].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.value = "";
