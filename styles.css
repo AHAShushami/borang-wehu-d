@@ -538,15 +538,28 @@ body {
 }
 
 .dur-small-box {
-  width: 48px;
+  width: 78px;
   height: 21px;
   background: var(--box-fill);
   border: 1px solid #444444;
   text-align: center;
   font-family: "Courier New", Courier, monospace;
-  font-size: 12.4px;
+  font-size: 12px;
   font-weight: 700;
+  padding: 0 4px;
   outline: none;
+}
+
+.dur-small-box:focus {
+  background: var(--focus-tint);
+  border-color: #1d4ed8;
+}
+
+.partd-hours-comment {
+  font-size: 10.3px;
+  font-style: italic;
+  color: #b45309;
+  margin-left: 6px;
 }
 
 /* Bottom Signature & Stamp Row */
@@ -777,7 +790,8 @@ body {
   .modal-backdrop,
   .no-print,
   .picker-icon-btn,
-  .quick-facility-select {
+  .quick-facility-select,
+  .partd-hours-comment {
     display: none !important;
   }
 

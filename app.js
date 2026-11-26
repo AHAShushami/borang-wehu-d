@@ -650,6 +650,7 @@ function clearAllFormFields() {
   document.getElementById("wehu-d-form").reset();
   document.getElementById("send-to-jkn").value = "KEDAH";
   document.getElementById("partb-state").value = "KEDAH";
+  document.getElementById("partb-nationality").value = "MALAYSIA";
 
   const today = new Date();
   const todayStr = `${String(today.getDate()).padStart(2, "0")}/${String(today.getMonth() + 1).padStart(2, "0")}/${today.getFullYear()}`;
@@ -1145,6 +1146,9 @@ document.addEventListener("DOMContentLoaded", () => {
     `${String(today.getDate()).padStart(2, "0")}/${String(today.getMonth() + 1).padStart(2, "0")}/${today.getFullYear()}`;
   document.getElementById("send-to-jkn").value = "KEDAH";
   document.getElementById("partb-state").value = "KEDAH";
+  if (!document.getElementById("partb-nationality").value.trim()) {
+    document.getElementById("partb-nationality").value = "MALAYSIA";
+  }
   document.getElementById("gas-url-input").value = getGasWebAppUrl();
 
   // Page navigation
